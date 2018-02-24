@@ -115,6 +115,7 @@ const propTypes = {
 	 * **Text labels for internationalization**
 	 * This object is merged with the default props object on every render.
 	 * * `label`: This label appears above the input.
+	 * * `labelRequired`: Applies label styling for a required form element
 	 * * `multipleOptionsSelected`: This label is used by the readonly variant when multiple options are selected. The default is `${props.selection.length} options selected`. This will override the entire string.
 	 * * `noOptionsFound`: Custom message that renders when no matches found. The default empty state is just text that says, 'No matches found.'.
 	 * * `placeholder`: Input placeholder
@@ -124,6 +125,7 @@ const propTypes = {
 	 */
 	labels: PropTypes.shape({
 		label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+		labelRequired: PropTypes.boolean,
 		multipleOptionsSelected: PropTypes.string,
 		noOptionsFound: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
 		placeholder: PropTypes.string,
@@ -1162,6 +1164,7 @@ class Combobox extends React.Component {
 					assistiveText={this.props.assistiveText.label}
 					htmlFor={this.getId()}
 					label={labels.label}
+					required={labels.labelRequired}
 				/>
 				{variantExists
 					? subRenders[this.props.variant][multipleOrSingle](
