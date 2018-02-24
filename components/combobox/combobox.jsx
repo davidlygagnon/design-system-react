@@ -54,6 +54,10 @@ const propTypes = {
 		selectedListboxLabel: PropTypes.string,
 	}),
 	/**
+	 * The `aria-describedby` attribute is used to indicate the IDs of the elements that describe the object. It is used to establish a relationship between widgets or groups and text that described them. This is very similar to aria-labelledby: a label describes the essence of an object, while a description provides more information that the user might need.
+	 */
+	'aria-describedby': PropTypes.string,
+	/**
 	 * CSS classes to be added to tag with `.slds-combobox`. Uses `classNames` [API](https://github.com/JedWatson/classnames). _Tested with snapshot testing._
 	 */
 	className: PropTypes.oneOfType([
@@ -103,6 +107,10 @@ const propTypes = {
 		onSelect: PropTypes.func,
 		onSubmit: PropTypes.func,
 	}),
+	/**
+	 * Message to display when the input is in an error state. When this is present, also visually highlights the component as in error.
+	*/
+	errorText: PropTypes.string,
 	/**
 	 * By default, dialogs will flip their alignment (such as bottom to top) if they extend beyond a boundary element such as a scrolling parent or a window/viewpoint. This is the opposite of "flippable."
 	 */
@@ -296,6 +304,10 @@ class Combobox extends React.Component {
 				{menuRenderer}
 			</Dialog>
 		) : null;
+	}
+
+	getErrorId () {
+		return `${this.props['aria-describedby'] || this.generatedId}-error-message`;
 	}
 
 	/**
@@ -653,6 +665,9 @@ class Combobox extends React.Component {
 						{
 							'slds-is-open': this.getIsOpen(),
 						},
+						{
+							'slds-has-error': this.props.errorText,
+						},
 						props.className
 					)}
 					aria-expanded={this.getIsOpen()}
@@ -669,6 +684,7 @@ class Combobox extends React.Component {
 								? `${this.getId()}-listbox-option-${this.state.activeOption.id}`
 								: null
 						}
+						aria-describedby={this.getErrorId()}
 						autoComplete="off"
 						className="slds-combobox__input"
 						containerProps={{
@@ -703,6 +719,11 @@ class Combobox extends React.Component {
 								: props.value
 						}
 					/>
+					{this.props.errorText && (
+						<div id={this.getErrorId()} className="slds-form-element__help">
+							{this.props.errorText}
+						</div>
+					)}
 					{this.getDialog({
 						menuRenderer: this.renderMenu({ assistiveText, labels }),
 					})}

@@ -4,6 +4,7 @@ import { storiesOf, action } from '@storybook/react';
 import { COMBOBOX } from '../../../utilities/constants';
 
 import Base from '../__examples__/base';
+import RequiredInputErrorState from '../__examples__/required-input-error-state';
 import PredefinedOptionsOnly from '../__examples__/base-predefined-options-only';
 import InlineSingle from '../__examples__/inline-single';
 import InlineMultiple from '../__examples__/inline-multiple';
@@ -13,6 +14,7 @@ import ReadOnlySingleSelectionCustomMenuItem from '../__examples__/readonly-sing
 import ReadOnlyMultiple from '../__examples__/readonly-multiple';
 import SnapshotBaseOpen from '../__examples__/snapshot/base-open';
 import SnapshotBaseCustomMenuItemOpen from '../__examples__/snapshot/base-custom-menu-item-open';
+import SnapshotBaseLabelRequired from '../__examples__/snapshot/base-label-required';
 import SnapshotBaseSelected from '../__examples__/snapshot/base-selected';
 import SnapshotInlineSingleSelection from '../__examples__/snapshot/inline-single-selection';
 import SnapshotInlineSingleSelectionSelected from '../__examples__/snapshot/inline-single-selection-selected';
@@ -44,11 +46,13 @@ storiesOf(COMBOBOX, module)
 	.add('Readonly Single Selection Custom Menu Item', () => (
 		<ReadOnlySingleSelectionCustomMenuItem action={action} />
 	))
+	.add('Required Input in Error State', () => <RequiredInputErrorState action={action} />)
 	.add('Snapshot Base Open', () => <SnapshotBaseOpen action={action} />)
 	.add('Snapshot Base Custom Menu Item Open', () => (
 		<SnapshotBaseCustomMenuItemOpen action={action} />
 	))
 	.add('Snapshot Base Selected', () => <SnapshotBaseSelected action={action} />)
+	.add('Snapshot Base Label Required', () => <SnapshotBaseLabelRequired action={action} />)
 	.add('Snapshot Inline Single Selection', () => (
 		<SnapshotInlineSingleSelection action={action} />
 	))
