@@ -281,7 +281,7 @@ const Lookup = createReactClass({
 		}
 
 		if (filteredItem && filteredItem.data.type === 'section') {
-			nextFocusIndex++;
+			nextFocusIndex += 1;
 		}
 
 		this.setState({ focusIndex: nextFocusIndex });
@@ -367,7 +367,7 @@ const Lookup = createReactClass({
 		);
 
 		if (filteredItem && filteredItem.data.type === 'section') {
-			nextFocusIndex++;
+			nextFocusIndex += 1;
 		}
 
 		this.setState({ focusIndex: nextFocusIndex });
@@ -636,7 +636,7 @@ const Lookup = createReactClass({
 				closeOnTabKey
 				contentsClassName="slds-lookup__menu slds-show"
 				context={this.context}
-				inheritTargetWidth
+				inheritWidthOf="target"
 				onClose={this.handleCancel}
 				hasStaticAlignement={!this.props.flippable}
 				constrainToScrollParent={this.props.constrainToScrollParent}
