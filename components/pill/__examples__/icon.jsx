@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
 
 import Pill from '~/components/pill';
 import Icon from '~/components/icon';
