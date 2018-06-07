@@ -125,6 +125,10 @@ const propTypes = {
 	 */
 	hasStaticAlignment: PropTypes.bool,
 	/**
+	 * Right aligned icon, must be instance of `design-system-react/components/icon/input-icon`
+	 */
+	iconRight: PropTypes.node,
+	/**
 	 * HTML id for component. _Tested with snapshot testing._
 	 */
 	id: PropTypes.string,
@@ -728,11 +732,13 @@ class Combobox extends React.Component {
 							role: 'none',
 						}}
 						iconRight={
-							<InputIcon
-								category="utility"
-								name="search"
-								title={labels.inputIconTitle}
-							/>
+							this.props.iconRight ?
+								this.props.iconRight :
+								<InputIcon
+									category="utility"
+									name="search"
+									title={labels.inputIconTitle}
+								/>
 						}
 						id={this.getId()}
 						onFocus={this.handleInputFocus}
@@ -853,11 +859,13 @@ class Combobox extends React.Component {
 							role: 'none',
 						}}
 						iconRight={
-							<InputIcon
-								category="utility"
-								name="search"
-								title={labels.inputIconTitle}
-							/>
+							this.props.iconRight ?
+								this.props.iconRight :
+								<InputIcon
+									category="utility"
+									name="search"
+									title={labels.inputIconTitle}
+								/>
 						}
 						id={this.getId()}
 						onFocus={this.handleInputFocus}
@@ -906,6 +914,10 @@ class Combobox extends React.Component {
 			props.selection[0] && props.selection[0].label
 				? props.selection[0].label
 				: props.value;
+
+		const iconRight = this.props.iconRight ?
+			this.props.iconRight :
+			<InputIcon category="utility" name="search" />;
 
 		/* eslint-disable jsx-a11y/role-supports-aria-props */
 		return (
@@ -967,7 +979,7 @@ class Combobox extends React.Component {
 										}}
 									/>
 								) : (
-									<InputIcon category="utility" name="search" />
+									iconRight
 								)
 							}
 							iconLeft={iconLeft}
@@ -1097,7 +1109,9 @@ class Combobox extends React.Component {
 								role: 'none',
 							}}
 							iconRight={
-								<InputIcon category="utility" name="down" variant="combobox" />
+								this.props.iconRight ?
+									this.props.iconRight :
+									<InputIcon category="utility" name="down" variant="combobox" />
 							}
 							id={this.getId()}
 							onFocus={this.handleInputFocus}
@@ -1201,7 +1215,9 @@ class Combobox extends React.Component {
 								role: 'none',
 							}}
 							iconRight={
-								<InputIcon category="utility" name="down" variant="combobox" />
+								this.props.iconRight ?
+									this.props.iconRight :
+									<InputIcon category="utility" name="down" variant="combobox" />
 							}
 							id={this.getId()}
 							onFocus={this.handleInputFocus}

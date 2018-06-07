@@ -21,8 +21,11 @@ import InputIcon from '../icon/input-icon';
 import MenuDropdown from '../menu-dropdown';
 import TimepickerDropdownTrigger from './private/dropdown-trigger';
 
+// ### Combobox
+import Combobox from '../combobox/combobox.jsx'
+
 // ## Constants
-import { TIME_PICKER } from '../../utilities/constants';
+import { TIME_PICKER, COMBOBOX } from '../../utilities/constants';
 
 /**
  *  Component description.
@@ -169,6 +172,7 @@ const Timepicker = createReactClass({
 			const formatted = this.props.formatter(curDate);
 
 			options.push({
+				id: options.length,
 				label: formatted,
 				value: new Date(curDate),
 			});
@@ -224,32 +228,50 @@ const Timepicker = createReactClass({
 	// ### Render
 	render () {
 		return (
-			<MenuDropdown
-				checkmark={false}
-				constrainToScrollParent={this.props.constrainToScrollParent}
-				disabled={this.props.disabled}
-				inheritTargetWidth={this.props.inheritTargetWidth}
-				label={this.props.label}
-				listItemRenderer={this.props.listItemRenderer}
-				// inline style override
-				menuStyle={{
-					maxHeight: '20em',
-					overflowX: 'hidden',
-					minWidth: '100%',
+			<Combobox
+				labels={{
+					label: this.props.label,
+					placeholder: this.props.placeholder
 				}}
+				events={{
+					onChange: this.handleInputChange,
+					onSelect: this.handleSelect
+				}}
+				iconRight={<InputIcon category="utility" name="clock" />}
+				inheritWidthOf={this.props.inheritWidthOf}
+				menuItem={this.props.menuItem}
 				menuPosition={this.props.menuPosition}
-				onSelect={this.handleSelect}
 				options={this.state.options}
-			>
-				<TimepickerDropdownTrigger
-					iconRight={<InputIcon category="utility" name="clock" />}
-					onChange={this.handleInputChange}
-					placeholder={this.props.placeholder}
-					required={this.props.required}
-					type="text"
-					value={this.state.strValue}
-				/>
-			</MenuDropdown>
+				required={this.props.required}
+				variant="readonly"
+			/>
+
+			// <MenuDropdown
+			// 	checkmark={false}
+			// 	constrainToScrollParent={this.props.constrainToScrollParent}
+			// 	disabled={this.props.disabled}
+			// 	inheritTargetWidth={this.props.inheritTargetWidth}
+			// 	label={this.props.label}
+			// 	listItemRenderer={this.props.listItemRenderer}
+			// 	// inline style override
+			// 	menuStyle={{
+			// 		maxHeight: '20em',
+			// 		overflowX: 'hidden',
+			// 		minWidth: '100%',
+			// 	}}
+			// 	menuPosition={this.props.menuPosition}
+			// 	onSelect={this.handleSelect}
+			// 	options={this.state.options}
+			// >
+			// 	<TimepickerDropdownTrigger
+			// 		iconRight={<InputIcon category="utility" name="clock" />}
+			// 		onChange={this.handleInputChange}
+			// 		placeholder={this.props.placeholder}
+			// 		required={this.props.required}
+			// 		type="text"
+			// 		value={this.state.strValue}
+			// 	/>
+			// </MenuDropdown>
 		);
 	},
 });
