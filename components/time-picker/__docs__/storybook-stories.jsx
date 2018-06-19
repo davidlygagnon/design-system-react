@@ -21,5 +21,8 @@ storiesOf(TIME_PICKER, module)
 			required: true,
 			stepInMinutes: 30,
 			onDateChange: action('onDateChange'),
+			placeholder: 'Pick a time',
+			disabled: false,
+			inheritTargetWidth: true,
 		})
 	);

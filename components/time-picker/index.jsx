@@ -18,25 +18,23 @@ import checkProps from './check-props';
 
 // ### Dropdown
 import InputIcon from '../icon/input-icon';
-import MenuDropdown from '../menu-dropdown';
-import TimepickerDropdownTrigger from './private/dropdown-trigger';
 
 // ### Combobox
-import Combobox from '../combobox/combobox.jsx'
+import Combobox from '../combobox/combobox.jsx';
 
 // ## Constants
-import { TIME_PICKER, COMBOBOX } from '../../utilities/constants';
+import { TIME_PICKER } from '../../utilities/constants';
 
 /**
  *  Component description.
  */
-const Timepicker = createReactClass({
+class Timepicker extends React.Component {
 	// ### Display Name
 	// Always use the canonical component name as the React display name.
-	displayName: TIME_PICKER,
+	static displayName = TIME_PICKER;
 
 	// ### Prop Types
-	propTypes: {
+	static propTypes = {
 		/**
 		 * If true, constrains the menu to the scroll parent. See `Dropdown`.
 		 */
@@ -100,48 +98,44 @@ const Timepicker = createReactClass({
 		 * Instance an internal state in the `date` format.
 		 */
 		value: PropTypes.instanceOf(Date),
-	},
+	};
 
-	getDefaultProps () {
-		return {
-			formatter (date) {
-				if (date) {
-					return date.toLocaleTimeString(navigator.language, {
-						hour: '2-digit',
-						minute: '2-digit',
-					});
-				}
-
-				return null;
-			},
-			parser (timeStr) {
-				const date = new Date();
-				const dateStr = date.toLocaleString(navigator.language, {
-					year: 'numeric',
-					month: 'numeric',
-					day: 'numeric',
+	static defaultProps = {
+		formatter (date) {
+			if (date) {
+				return date.toLocaleTimeString(navigator.language, {
+					hour: '2-digit',
+					minute: '2-digit',
 				});
-				return new Date(`${dateStr} ${timeStr}`);
-			},
-			menuPosition: 'absolute',
-			placeholder: 'Pick Time',
-			value: null,
-			stepInMinutes: 30,
-		};
-	},
+			}
 
-	getInitialState () {
-		return {
-			value: this.props.value,
-			strValue: this.props.strValue,
-			options: this.getOptions(),
-		};
-	},
+			return null;
+		},
+		parser (timeStr) {
+			const date = new Date();
+			const dateStr = date.toLocaleString(navigator.language, {
+				year: 'numeric',
+				month: 'numeric',
+				day: 'numeric',
+			});
+			return new Date(`${dateStr} ${timeStr}`);
+		},
+		menuPosition: 'absolute',
+		placeholder: 'Pick Time',
+		value: null,
+		stepInMinutes: 30,
+	};
+
+	state = {
+		value: this.props.value,
+		strValue: this.props.strValue,
+		options: this.getOptions(),
+	};
 
 	componentWillMount () {
 		// `checkProps` issues warnings to developers about properties (similar to React's built in development tools)
 		checkProps(TIME_PICKER, this.props);
-	},
+	}
 
 	componentWillReceiveProps (nextProps) {
 		if (nextProps.value && this.props.value) {
@@ -155,7 +149,7 @@ const Timepicker = createReactClass({
 				});
 			}
 		}
-	},
+	}
 
 	getOptions () {
 		const baseDate = new Date();
@@ -181,9 +175,9 @@ const Timepicker = createReactClass({
 		}
 
 		return options;
-	},
+	}
 
-	parseDate (strValue) {
+	parseDate = (strValue) => {
 		const newDate = this.props.parser(strValue);
 
 		if (isDate(newDate)) {
@@ -193,9 +187,9 @@ const Timepicker = createReactClass({
 		}
 
 		return new Date();
-	},
+	};
 
-	handleChange (date, strValue) {
+	handleChange = (date, strValue) => {
 		this.setState({
 			value: date,
 			strValue,
@@ -204,15 +198,16 @@ const Timepicker = createReactClass({
 		if (this.props.onDateChange) {
 			this.props.onDateChange(date, strValue);
 		}
-	},
+	};
 
-	handleSelect (val) {
+	handleSelect = (event, { selection }) => {
+		const val = selection[0];
 		if (val && val.value) {
 			this.handleChange(val.value, val.label);
 		}
-	},
+	};
 
-	handleInputChange (event) {
+	handleInputChange = (event) => {
 		const strValue = event.target.value;
 
 		this.setState({
@@ -223,57 +218,35 @@ const Timepicker = createReactClass({
 			const parsedDate = this.props.parser(strValue);
 			this.props.onDateChange(parsedDate, strValue);
 		}
-	},
+	};
 
 	// ### Render
 	render () {
 		return (
 			<Combobox
-				labels={{
-					label: this.props.label,
-					placeholder: this.props.placeholder
-				}}
+				disabled={this.props.disabled}
 				events={{
 					onChange: this.handleInputChange,
-					onSelect: this.handleSelect
+					onSelect: this.handleSelect,
 				}}
 				iconRight={<InputIcon category="utility" name="clock" />}
-				inheritWidthOf={this.props.inheritWidthOf}
+				inheritWidthOf={this.props.inheritTargetWidth ? 'target' : 'menu'}
+				labels={{
+					label: this.props.label,
+					placeholderReadOnly: this.props.placeholder,
+				}}
 				menuItem={this.props.menuItem}
 				menuPosition={this.props.menuPosition}
 				options={this.state.options}
 				required={this.props.required}
+				selection={this.state.options.filter(
+					(option) => option.value === this.state.value
+				)}
+				value={this.state.strValue}
 				variant="readonly"
 			/>
-
-			// <MenuDropdown
-			// 	checkmark={false}
-			// 	constrainToScrollParent={this.props.constrainToScrollParent}
-			// 	disabled={this.props.disabled}
-			// 	inheritTargetWidth={this.props.inheritTargetWidth}
-			// 	label={this.props.label}
-			// 	listItemRenderer={this.props.listItemRenderer}
-			// 	// inline style override
-			// 	menuStyle={{
-			// 		maxHeight: '20em',
-			// 		overflowX: 'hidden',
-			// 		minWidth: '100%',
-			// 	}}
-			// 	menuPosition={this.props.menuPosition}
-			// 	onSelect={this.handleSelect}
-			// 	options={this.state.options}
-			// >
-			// 	<TimepickerDropdownTrigger
-			// 		iconRight={<InputIcon category="utility" name="clock" />}
-			// 		onChange={this.handleInputChange}
-			// 		placeholder={this.props.placeholder}
-			// 		required={this.props.required}
-			// 		type="text"
-			// 		value={this.state.strValue}
-			// 	/>
-			// </MenuDropdown>
 		);
-	},
-});
+	}
+}
 
 export default Timepicker;
