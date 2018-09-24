@@ -22,16 +22,22 @@ components.map((node) => {
 	dirName.pop();
 	dirName = dirName.join('/');
 
+	console.log("dirname: " + __dirname);
 	let inputPath = path.join(__dirname, '../components', node.component);
+
+	// Retrieve component json documentation (docs.json)
+	const jsonDocPath = path.join(inputPath, 'docs.json');
+	const rawJsonDoc = fs.readFileSync(jsonDocPath, 'utf8');
+	const jsonDoc = JSON.parse(rawJsonDoc);
 
 	// If index.jsx is just a wrapping of the component, then use the [COMPONENT_NAME].jsx file for props.
 
 	const inputPathUnwrapped = path.join(
 		__dirname,
 		'../components',
-		node.component,
+		jsonDoc.component,
 		'/',
-		`${node.component}.jsx`
+		`${jsonDoc.component}.jsx`
 	);
 
 	try {
@@ -67,17 +73,17 @@ components.map((node) => {
 			'classProperties',
 		],
 	});
-	const cleanRoute = kebabCase(node['display-name']);
+	const cleanRoute = kebabCase(jsonDoc['display-name']);
 
 	let dependencies = {};
-	if (node.dependencies) {
-		dependencies = node.dependencies.map((dependency) => {
+	if (jsonDoc.dependencies) {
+		dependencies = jsonDoc.dependencies.map((dependency) => {
 			const toReturn = {};
 
 			const depInputPathToUse = path.join(
 				__dirname,
 				'../components',
-				node.component,
+				jsonDoc.component,
 				'/',
 				`${dependency.component}.jsx`
 			);
@@ -121,8 +127,8 @@ components.map((node) => {
 	}
 
 	doc.route = cleanRoute;
-	doc['display-name'] = node['display-name'];
-	doc['SLDS-component-path'] = node['SLDS-component-path'];
+	doc['display-name'] = jsonDoc['display-name'];
+	doc['SLDS-component-path'] = jsonDoc['SLDS-component-path'];
 
 	// Clean the dependencies
 	const cleanDependencies = filter(dependencies, (object) => !isEmpty(object));
@@ -130,16 +136,16 @@ components.map((node) => {
 	doc.dependencies = cleanDependencies;
 
 	ast.route = cleanRoute;
-	ast['display-name'] = node['display-name'];
-	ast['SLDS-component-path'] = node['SLDS-component-path'];
+	ast['display-name'] = jsonDoc['display-name'];
+	ast['SLDS-component-path'] = jsonDoc['SLDS-component-path'];
 	ast.dependencies = dependencies;
 
-	output[node.component.replace('forms/', '')] = doc;
-	outputAst[node.component.replace('forms/', '')] = ast;
+	output[jsonDoc.component.replace('forms/', '')] = doc;
+	outputAst[jsonDoc.component.replace('forms/', '')] = ast;
 	return true;
 });
 
-const outputPath = path.join(__dirname, '../components/component-docs.json');
+const outputPath = path.join(__dirname, '../components/component-docs2.json');
 
 fs.writeFile(outputPath, JSON.stringify(output, null, 4), (err) => {
 	if (err) {
@@ -150,9 +156,9 @@ fs.writeFile(outputPath, JSON.stringify(output, null, 4), (err) => {
 	}
 });
 
-// FOR DEBUGGING
+// // FOR DEBUGGING
 
-// const outputAstPath = path.join(__dirname, '../examples/components-ast.json');
+// const outputAstPath = path.join(__dirname, '../components/components-test.json');
 // fs.writeFile(outputAstPath, JSON.stringify(outputAst, null, 4), (err) => {
 // 	if (err) {
 // 		console.log('  [ ERROR AT ./scripts/build-docs.js:145 ] err: ', util.inspect(err, { showHidden: true, depth: null, colors: true }));
