@@ -86,6 +86,7 @@ class Example extends React.Component {
         return (
             <IconSettings iconPath="/assets/icons">
                 <Combobox
+                    isOpen
                     id="combobox-unique-id"
                     disabled={this.props.disabled}
                     events={{
