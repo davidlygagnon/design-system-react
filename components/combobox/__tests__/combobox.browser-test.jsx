@@ -146,9 +146,12 @@ class DemoComponent extends React.Component {
 									...this.state.selection,
 									{
 										label: value,
+										id: 'another-account',
 										icon: (
 											<Icon
-												assistiveText="Account"
+												assistiveText={{
+													label: 'Account',
+												}}
 												category="standard"
 												name="account"
 											/>
@@ -354,6 +357,70 @@ describe('SLDSCombobox', function() {
 				nodes: getNodes({ wrapper }),
 				index: 0,
 			}).simulate('keydown', keyObjects.DELETE);
+		});
+
+		it('selects a menu item and scrolls when a letter key is pressed in read-only mode', () => {
+			wrapper = mount(<DemoComponent variant="readonly" />, {
+				attachTo: mountNode,
+			});
+			let nodes = getNodes({ wrapper });
+
+			nodes.input.simulate('keyDown', keyObjects.DOWN);
+			nodes = getNodes({ wrapper });
+			for (let i = 0; i < 3; i++) {
+				nodes.input.simulate('keyDown', letterKeyObjects.A);
+			}
+
+			const menuListItem = nodes.menuListbox.find(
+				'#combobox-unique-id-listbox-option-8'
+			);
+			expect(
+				menuListItem.instance().className.search('slds-has-focus') > -1
+			).to.eql(true);
+
+			const scrollTop = nodes.menuListbox.instance().scrollTop;
+			expect(scrollTop === 98 || scrollTop === 0).to.eql(true); // done because menu and menu item size in phantomjs is weird
+		});
+
+		it('selects menu items and scrolls when the down/up keys are pressed', () => {
+			wrapper = mount(<DemoComponent variant="readonly" />, {
+				attachTo: mountNode,
+			});
+			let nodes = getNodes({ wrapper });
+			let i;
+			let menuListItem;
+			let scrollTop;
+
+			nodes.input.simulate('keyDown', keyObjects.DOWN);
+			nodes = getNodes({ wrapper });
+
+			for (i = 0; i < 8; i++) {
+				nodes.input.simulate('keyDown', keyObjects.DOWN);
+			}
+
+			menuListItem = nodes.menuListbox.find(
+				'#combobox-unique-id-listbox-option-8'
+			);
+			expect(
+				menuListItem.instance().className.search('slds-has-focus') > -1
+			).to.eql(true);
+
+			scrollTop = nodes.menuListbox.instance().scrollTop;
+			expect(scrollTop === 98 || scrollTop === 0).to.eql(true); // done because menu and menu item size in phantomjs is weird
+
+			for (i = 0; i < 8; i++) {
+				nodes.input.simulate('keyDown', keyObjects.UP);
+			}
+
+			menuListItem = nodes.menuListbox.find(
+				'#combobox-unique-id-listbox-option-1'
+			);
+			expect(
+				menuListItem.instance().className.search('slds-has-focus') > -1
+			).to.eql(true);
+
+			scrollTop = nodes.menuListbox.instance().scrollTop;
+			expect(scrollTop === 4 || scrollTop === 0).to.eql(true); // done because menu and menu item size in phantomjs is weird
 		});
 	});
 

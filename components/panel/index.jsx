@@ -35,14 +35,15 @@ class Panel extends React.Component {
 				className={classNames(
 					'slds-panel',
 					'slds-grid',
-					'slds-grid--vertical',
+					'slds-grid_vertical',
 					'slds-nowrap',
 					{
-						'slds-panel--filters': this.props.variant === 'filters',
-					}
+						'slds-panel_filters': this.props.variant === 'filters',
+					},
+					this.props.className
 				)}
 			>
-				<div className="slds-form--stacked slds-grow slds-scrollable--y slds-grid slds-grid--vertical">
+				<div className="slds-form_stacked slds-grow slds-scrollable_y slds-grid slds-grid_vertical">
 					{this.props.children}
 				</div>
 			</div>
@@ -57,6 +58,14 @@ Panel.propTypes = {
 	 * The contents of the panel
 	 */
 	children: PropTypes.node,
+	/**
+	 * CSS classes to be added to `slds-panel`.
+	 */
+	className: PropTypes.oneOfType([
+		PropTypes.array,
+		PropTypes.object,
+		PropTypes.string,
+	]),
 	/**
 	 * The type of panel
 	 */

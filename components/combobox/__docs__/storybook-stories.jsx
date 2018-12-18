@@ -1,5 +1,6 @@
 import React from 'react';
-import { storiesOf, action } from '@storybook/react';
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 
 import { COMBOBOX } from '../../../utilities/constants';
 
@@ -35,7 +36,7 @@ import SnapshotBaseLabelRequired from '../__examples__/snapshot/base-label-requi
 
 storiesOf(COMBOBOX, module)
 	.addDecorator((getStory) => (
-		<div className="slds-p-around--medium">{getStory()}</div>
+		<div className="slds-p-around_medium">{getStory()}</div>
 	))
 	.add('Base', () => <Base action={action} />)
 	.add('Base Pre-defined Options Only', () => (

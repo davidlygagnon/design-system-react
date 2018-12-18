@@ -1,7 +1,8 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
+
 import PropTypes from 'prop-types';
-import { storiesOf, action } from '@storybook/react';
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 
 import { APP_LAUNCHER } from '../../../utilities/constants';
 
@@ -32,13 +33,13 @@ const smallTileDemoStyles = {
 	paddingRight: '.5rem',
 };
 
-const DemoAppLauncherTile = createReactClass({
-	displayName: 'DemoAppLauncherTile',
+class DemoAppLauncherTile extends React.Component {
+	static displayName = 'DemoAppLauncherTile';
 
-	propTypes: {
+	static propTypes = {
 		search: PropTypes.string,
 		size: PropTypes.string,
-	},
+	};
 
 	render() {
 		return (
@@ -52,11 +53,11 @@ const DemoAppLauncherTile = createReactClass({
 				size={this.props.size}
 			/>
 		);
-	},
-});
+	}
+}
 
-const DemoAppLauncherSmallTile = createReactClass({
-	displayName: 'DemoAppLauncherSmallTile',
+class DemoAppLauncherSmallTile extends React.Component {
+	static displayName = 'DemoAppLauncherSmallTile';
 
 	render() {
 		return (
@@ -67,16 +68,16 @@ const DemoAppLauncherSmallTile = createReactClass({
 				onClick={action('Tiny tile clicked!')}
 			/>
 		);
-	},
-});
+	}
+}
 
-const DemoAppLauncherTileWithIconNode = createReactClass({
-	displayName: 'DemoAppLauncherTileWithIconNode',
+class DemoAppLauncherTileWithIconNode extends React.Component {
+	static displayName = 'DemoAppLauncherTileWithIconNode';
 
-	propTypes: {
+	static propTypes = {
 		search: PropTypes.string,
 		size: PropTypes.string,
-	},
+	};
 
 	render() {
 		const icon = <Icon name="campaign" category="standard" size="large" />;
@@ -92,16 +93,16 @@ const DemoAppLauncherTileWithIconNode = createReactClass({
 				size={this.props.size}
 			/>
 		);
-	},
-});
+	}
+}
 
-const DemoAppLauncherTileWithIconText = createReactClass({
-	displayName: 'DemoAppLauncherTileWithIconText',
+class DemoAppLauncherTileWithIconText extends React.Component {
+	static displayName = 'DemoAppLauncherTileWithIconText';
 
-	propTypes: {
+	static propTypes = {
 		search: PropTypes.string,
 		size: PropTypes.string,
-	},
+	};
 
 	render() {
 		return (
@@ -114,16 +115,16 @@ const DemoAppLauncherTileWithIconText = createReactClass({
 				size={this.props.size}
 			/>
 		);
-	},
-});
+	}
+}
 
-const DemoAppLauncherTileWithTruncatedText = createReactClass({
-	displayName: 'DemoAppLauncherTileWithTruncatedText',
+class DemoAppLauncherTileWithTruncatedText extends React.Component {
+	static displayName = 'DemoAppLauncherTileWithTruncatedText';
 
-	propTypes: {
+	static propTypes = {
 		search: PropTypes.string,
 		size: PropTypes.string,
-	},
+	};
 
 	render() {
 		return (
@@ -136,22 +137,20 @@ const DemoAppLauncherTileWithTruncatedText = createReactClass({
 				size={this.props.size}
 			/>
 		);
-	},
-});
+	}
+}
 
-const DemoAppLauncherTileWithDescriptionHeading = createReactClass({
-	displayName: 'DemoAppLauncherTileWithDescriptionHeading',
+class DemoAppLauncherTileWithDescriptionHeading extends React.Component {
+	static displayName = 'DemoAppLauncherTileWithDescriptionHeading';
 
-	propTypes: {
+	static propTypes = {
 		search: PropTypes.string,
 		size: PropTypes.string,
-	},
+	};
 
-	getDefaultProps() {
-		return {
-			search: 'journey',
-		};
-	},
+	static defaultProps = {
+		search: 'journey',
+	};
 
 	render() {
 		return (
@@ -165,22 +164,20 @@ const DemoAppLauncherTileWithDescriptionHeading = createReactClass({
 				size={this.props.size}
 			/>
 		);
-	},
-});
+	}
+}
 
-const DemoAppLauncherTileWithSearchText = createReactClass({
-	displayName: 'DemoAppLauncherTileWithSearchText',
+class DemoAppLauncherTileWithSearchText extends React.Component {
+	static displayName = 'DemoAppLauncherTileWithSearchText';
 
-	propTypes: {
+	static propTypes = {
 		search: PropTypes.string,
 		size: PropTypes.string,
-	},
+	};
 
-	getDefaultProps() {
-		return {
-			search: 'Call',
-		};
-	},
+	static defaultProps = {
+		search: 'Call',
+	};
 
 	render() {
 		return (
@@ -189,11 +186,11 @@ const DemoAppLauncherTileWithSearchText = createReactClass({
 				size={this.props.size}
 			/>
 		);
-	},
-});
+	}
+}
 
-const DemoAppLauncherSection = createReactClass({
-	displayName: 'DemoAppLauncherSection',
+class DemoAppLauncherSection extends React.Component {
+	static displayName = 'DemoAppLauncherSection';
 
 	render() {
 		return (
@@ -217,11 +214,11 @@ const DemoAppLauncherSection = createReactClass({
 				</AppLauncherSection>
 			</div>
 		);
-	},
-});
+	}
+}
 
-const DemoAppLauncherSectionWithSmallTiles = createReactClass({
-	displayName: 'DemoAppLauncherSectionWithSmallTiles',
+class DemoAppLauncherSectionWithSmallTiles extends React.Component {
+	static displayName = 'DemoAppLauncherSectionWithSmallTiles';
 
 	render() {
 		return (
@@ -243,35 +240,33 @@ const DemoAppLauncherSectionWithSmallTiles = createReactClass({
 				</AppLauncherSection>
 			</div>
 		);
-	},
-});
+	}
+}
 
-const DemoAppLauncher = createReactClass({
-	displayName: 'DemoAppLauncher',
+class DemoAppLauncher extends React.Component {
+	static displayName = 'DemoAppLauncher';
 
-	getInitialState() {
-		return {
-			search: '',
-			appLauncherOpen: this.props.isOpen || false, // eslint-disable-line react/prop-types
-			allItemsSectionIsOpen: false,
-		};
-	},
+	state = {
+		search: '',
+		appLauncherOpen: this.props.isOpen || false, // eslint-disable-line react/prop-types
+		allItemsSectionIsOpen: false,
+	};
 
-	onClear() {
+	onClear = () => {
 		this.setState({ search: '' });
-	},
+	};
 
-	onSearch(event) {
+	onSearch = (event) => {
 		this.setState({ search: event.target.value });
-	},
+	};
 
-	toggleAppLauncher() {
+	toggleAppLauncher = () => {
 		this.setState({ appLauncherOpen: !this.state.appLauncherOpen });
-	},
+	};
 
-	toggleSection() {
+	toggleSection = () => {
 		this.setState({ allItemsSectionIsOpen: !this.state.allItemsSectionIsOpen });
-	},
+	};
 
 	render() {
 		const search = (
@@ -341,27 +336,25 @@ const DemoAppLauncher = createReactClass({
 				</GlobalNavigationBarRegion>
 			</GlobalNavigationBar>
 		);
-	},
-});
+	}
+}
 
-const DemoAppLauncherNoHeaderButton = createReactClass({
-	displayName: 'DemoAppLauncherNoHeaderButton',
+class DemoAppLauncherNoHeaderButton extends React.Component {
+	static displayName = 'DemoAppLauncherNoHeaderButton';
 
-	getInitialState() {
-		return {
-			search: '',
-			appLauncherOpen: false,
-			allItemsSectionIsOpen: false,
-		};
-	},
+	state = {
+		search: '',
+		appLauncherOpen: false,
+		allItemsSectionIsOpen: false,
+	};
 
-	onSearch(event) {
+	onSearch = (event) => {
 		this.setState({ search: event.target.value });
-	},
+	};
 
-	toggleAppLauncher() {
+	toggleAppLauncher = () => {
 		this.setState({ appLauncherOpen: !this.state.appLauncherOpen });
-	},
+	};
 
 	render() {
 		const search = (
@@ -397,22 +390,20 @@ const DemoAppLauncherNoHeaderButton = createReactClass({
 				</GlobalNavigationBarRegion>
 			</GlobalNavigationBar>
 		);
-	},
-});
+	}
+}
 
-const DemoAppLauncherNoSearch = createReactClass({
-	displayName: 'DemoAppLauncherNoSearch',
+class DemoAppLauncherNoSearch extends React.Component {
+	static displayName = 'DemoAppLauncherNoSearch';
 
-	getInitialState() {
-		return {
-			appLauncherOpen: false,
-			allItemsSectionIsOpen: false,
-		};
-	},
+	state = {
+		appLauncherOpen: false,
+		allItemsSectionIsOpen: false,
+	};
 
-	toggleAppLauncher() {
+	toggleAppLauncher = () => {
 		this.setState({ appLauncherOpen: !this.state.appLauncherOpen });
-	},
+	};
 
 	render() {
 		const modalHeaderButton = (
@@ -442,15 +433,15 @@ const DemoAppLauncherNoSearch = createReactClass({
 				</GlobalNavigationBarRegion>
 			</GlobalNavigationBar>
 		);
-	},
-});
+	}
+}
 
-const DemoAppLauncherWithSeveralSections = createReactClass({
-	displayName: 'DemoAppLauncherWithSeveralSections',
+class DemoAppLauncherWithSeveralSections extends React.Component {
+	static displayName = 'DemoAppLauncherWithSeveralSections';
 
-	onSearch() {
+	onSearch = () => {
 		// stub
-	},
+	};
 
 	render() {
 		const search = (
@@ -501,12 +492,12 @@ const DemoAppLauncherWithSeveralSections = createReactClass({
 				</GlobalNavigationBarRegion>
 			</GlobalNavigationBar>
 		);
-	},
-});
+	}
+}
 
 storiesOf(APP_LAUNCHER, module)
 	.addDecorator((getStory) => (
-		<div className="slds-p-around--medium">
+		<div className="slds-p-around_medium">
 			<IconSettings iconPath="/assets/icons">{getStory()}</IconSettings>
 		</div>
 	))
